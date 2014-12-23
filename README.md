@@ -1,4 +1,4 @@
-Kinkkukamera
+HamCam
 ============
 
 Quick christmas ham camera proto.
