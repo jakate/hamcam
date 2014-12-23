@@ -38,5 +38,7 @@ app.post('/image', function(req, res) {
   imagecount = imagecount%imagecountMax;
 });
 
+var port = 3000;
+var server = app.listen(port);
 
-var server = app.listen(3000);
+console.log("Server started. http://localhost:" + port + "/");
