@@ -1,7 +1,12 @@
 Kinkkukamera
 ============
 
-Quick christmas ham camera proto
+Quick christmas ham camera proto.
+
+1.  Takes picture with webcam every minute and sends it to server
+2.  Server saves the image to Dropbox
+3.  ???
+4.  Profit
 
 #HOWTO
 
