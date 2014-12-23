@@ -15,3 +15,6 @@ Run:
 Go to http://localhost:3000/
 
 Allow the camera access and press "Aloita"
+
+![](https://github.com/jakate/kinkkukamera/blob/master/demo1.jpeg)
+![](https://github.com/jakate/kinkkukamera/blob/master/demo2.jpeg)
