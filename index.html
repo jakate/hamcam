@@ -1,0 +1,149 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>Kinkkukamera</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+
+          body {
+            background: #efefef;
+            font-family: Arial;
+          }
+
+          #start_capturing {
+            border: 1px solid #cdcdcd;
+            padding: 20px 40px;
+            text-decoration: none;
+            color: #333;
+            background: #cdcdcd;
+            display: block;
+            margin: 0 auto;
+            width: 400px;
+            text-align: center;
+          }
+
+          #my_camera,
+          #my_result {
+            float: left;
+            border: #333;
+          }
+
+          #progress {
+            background: #ff0099;
+            height: 20px;
+            width: 100%;
+            transform-origin: 0% 0%;
+            -webkit-transform-origin: 0% 0%;
+          }
+
+        </style>
+    </head>
+    <body>
+        <div>
+          <h1>Kinkkukamera</h1>
+          <a href="#" id="start_capturing">Aloita</a>
+          <div id="progress"></div>
+        </div>
+
+        <div id="my_camera" style="width:640px; height:480px;"></div>
+        <div id="my_result"></div>
+
+        <script src="webcam.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+        <script>
+          window.requestAnimFrame = (function(){
+            return  window.requestAnimationFrame       ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame    ||
+                    function( callback ){
+                      window.setTimeout(callback, 1000 / 60);
+                    };
+          })();
+        </script>
+        <script>
+          var width = 426;
+          var height = 320;
+          var imagesPerMinute = 15;
+
+          var timeSinceLastImage = 0;
+          var lastImateTaken;
+
+          var init = function(){
+            $('#progress').hide();
+
+            $('#my_camera').css({
+              'width': width + 'px',
+              'height': height + 'px',
+            });
+
+            $('#my_result').css({
+              'width': width + 'px',
+              'height': height + 'px',
+            });
+
+            $('#start_capturing').click(function(e){
+              takeSnapshot();
+              loop();
+              $('#progress').show();
+              $('#start_capturing').hide();
+            });
+
+            Webcam.set({
+              width: width,
+              height: height,
+              dest_width: width,
+              dest_height: height,
+              image_format: 'jpeg',
+              jpeg_quality: 90,
+              force_flash: false
+            });
+
+            Webcam.attach('#my_camera');
+          }
+
+          var takeSnapshot = function() {
+            Webcam.snap(function(webcamData) {
+              document.getElementById('my_result').innerHTML = '<img src="' + webcamData + '"/>';
+
+              $.ajax({
+                type: "POST",
+                url: "/image",
+                data: {
+                  data: webcamData
+                }
+              })
+              .done(function(response) {
+                console.log(response);
+              });
+            });
+
+            lastImateTaken = new Date().getTime();
+            timeSinceLastImage = 0;
+          }
+
+          var loop = function(){
+            requestAnimFrame(loop);
+
+            if(!lastImateTaken) { return }
+
+            timeSinceLastImage = new Date().getTime() - lastImateTaken;
+            var percentage = timeSinceLastImage / (60000 / imagesPerMinute);
+
+            $('#progress').css({
+              'transform': 'scale(' + (1-percentage) + ',1)'
+            });
+
+            if(percentage > 1) {
+              takeSnapshot()
+            }
+          }
+
+          $(document).ready(function(){
+            init();
+          });
+        </script>
+    </body>
+</html>
