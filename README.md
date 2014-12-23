@@ -1,7 +1,7 @@
 Kinkkukamera
 ============
 
-Quick Christmas ham camera proto
+Quick christmas ham camera proto
 
 #HOWTO
 
@@ -14,5 +14,4 @@ Run:
 
 Go to http://localhost:3000/
 
-Allow the camera access
-Press "Aloita"
+Allow the camera access and press "Aloita"
