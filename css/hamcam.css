@@ -1,0 +1,30 @@
+body {
+  background: #efefef;
+  font-family: Arial;
+}
+
+#start_capturing {
+  border: 1px solid #cdcdcd;
+  padding: 20px 40px;
+  text-decoration: none;
+  color: #333;
+  background: #cdcdcd;
+  display: block;
+  margin: 0 auto;
+  width: 400px;
+  text-align: center;
+}
+
+#my_camera,
+#my_result {
+  float: left;
+  border: #333;
+}
+
+#progress {
+  background: #ff0099;
+  height: 20px;
+  width: 100%;
+  transform-origin: 0% 0%;
+  -webkit-transform-origin: 0% 0%;
+}

@@ -5,15 +5,14 @@ var bodyParser = require('body-parser')
 var app = express();
 
 app.engine('html', require('ejs').renderFile);
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/'));
 
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
 app.get('/', function(req, res) {
-  res.render('index.html');
+  res.render('html/index.html');
 });
 
 var imagecount = 0;
@@ -41,4 +40,4 @@ app.post('/image', function(req, res) {
 var port = 3000;
 var server = app.listen(port);
 
-console.log("Server started. http://localhost:" + port + "/");
+console.log("Server started. http://localhost:" + port);
